@@ -1,6 +1,35 @@
 // Import dependencies
-const { Client, GatewayIntentBits } = require('discord.js');
-require('dotenv').config(); 
+const { Client, GatewayIntentBits, REST, Routes } = require('discord.js');
+require('dotenv').config();
+
+const clientId = '1326109647865905172'; 
+const guildId = '1052147016744058902'; 
+
+// Daftar perintah bot
+const commands = [
+    {
+        name: 'ayo',
+        description:'Mang Eak!',
+    },
+];
+
+// Membuat instance REST untuk mengirim perintah
+const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
+
+(async () => {
+    try {
+        console.log('Started refreshing application (/) commands.');
+
+        // Daftarkan perintah ke guild tertentu
+        await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+            body: commands,
+        });
+
+        console.log('Successfully reloaded application (/) commands.');
+    } catch (error) {
+        console.error(error);
+    }
+})();
 
 // Create a new Discord client
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -11,13 +40,13 @@ client.once('ready', () => {
 });
 
 // Respond to interactions
-client.on('interactionCreate', async interaction => {
+client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand()) return;
 
     const { commandName } = interaction;
 
-    if (commandName === 'ping') {
-        await interaction.reply('Pong!');
+    if (commandName === 'ayo') {
+        await interaction.reply('Mang Eak!');
     }
 });
 
