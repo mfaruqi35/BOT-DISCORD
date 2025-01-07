@@ -1,2 +1,2 @@
 # BOT-DISCORD
-Repo iseng untuk bikin bot discord
+Repo iseng untuk bikin bot discord YAYAY
